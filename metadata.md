@@ -4,10 +4,7 @@
 
 We selected the following dataset from Kaggle for our Human Centered Data Science project: https://www.kaggle.com/datasets/rabieelkharoua/alzheimers-disease-dataset/data .
 
-The dataset contains extensive health information for **2,149 patients**, each uniquely identified with IDs ranging from **4751 to 6900**. It includes demographic details, lifestyle factors, medical history, clinical measurements, cognitive and functional assessments, symptoms, and a diagnosis of Alzheimer's Disease. The data is ideal for researchers and data scientists looking to:
-- Explore factors associated with Alzheimer's
-- Develop predictive models
-- Conduct statistical analyses
+The dataset contains extensive health information for **2,149 patients**, each uniquely identified with IDs ranging from **4751 to 6900**. It includes demographic details, lifestyle factors, medical history, clinical measurements, cognitive and functional assessments, symptoms, and a diagnosis of Alzheimer's Disease.
 
 ---
 
@@ -21,7 +18,6 @@ The dataset contains extensive health information for **2,149 patients**, each u
 - [Symptoms](#symptoms)
 - [Diagnosis Information](#diagnosis-information)
 - [Confidential Information](#confidential-information)
-- [Conclusion](#conclusion)
 
 ---
 
@@ -103,14 +99,6 @@ The dataset contains extensive health information for **2,149 patients**, each u
 
 ## Confidential Information
 - **DoctorInCharge**: Contains confidential information ("XXXConfid" for all patients)
-
----
-
-## Conclusion
-This dataset provides rich insights into the factors associated with Alzheimer's Disease across various dimensions: demographic, lifestyle, medical, cognitive, and functional. It is well-suited for:
-- Predictive modeling
-- Statistical exploration
-- Investigating the interplay of risk factors
 
 ---
 
