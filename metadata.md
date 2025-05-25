@@ -4,7 +4,9 @@
 
 We selected the following dataset from Kaggle for our Human Centered Data Science project: https://www.kaggle.com/datasets/rabieelkharoua/alzheimers-disease-dataset/data .
 
-The dataset contains extensive health information for **2,149 patients**, each uniquely identified with IDs ranging from **4751 to 6900**. It includes demographic details, lifestyle factors, medical history, clinical measurements, cognitive and functional assessments, symptoms, and a diagnosis of Alzheimer's Disease.
+The dataset contains extensive health information for 2,149 patients, each uniquely identified with IDs ranging from 4751 to 6900. It includes demographic details, lifestyle factors, medical history, clinical measurements, cognitive and functional assessments, symptoms, and a diagnosis of Alzheimer's Disease.
+
+The dataset is stored as a table in **csv** format. It has **2,149 rows (patients) and 35 columns (features)**.
 
 ---
 
