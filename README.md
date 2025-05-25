@@ -2,8 +2,8 @@
 
 ## Our Team
 
-Nino Sabella
-Saad
-David
-Yasmine
-Orkun
+- Nino Sabella (MSc Data Science)
+- Saad Waseeb (MSc Data Science)
+- Jingren Dai (MSc Data Science)
+- Yasemin Mutlugil (MSc Computer Science)
+- Orkun Akyol (MSc Data Science)
