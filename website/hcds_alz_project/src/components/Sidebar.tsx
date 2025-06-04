@@ -10,7 +10,7 @@ import {
 import { cn } from "hcds/libs/utils";
 
 const menuItems = [
-  { icon: Home, label: "Overview", active: true },
+  { icon: Home, label: "Overview", active: true, hasSubmenu: false },
   { icon: Settings, label: "Make a Prediction",},
   { icon: Search, label: "Explanation" },
   { icon: File, label: "About", },

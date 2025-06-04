@@ -1,7 +1,7 @@
-import { useState } from "react";
+// import { useState } from "react";
 
 const InProgressPages = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  // const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
     <div>
