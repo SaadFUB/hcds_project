@@ -5,7 +5,8 @@ import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github.css";
 import "./github-markdown.css";
 
-const url = "https://raw.githubusercontent.com/SaadFUB/hcds_project/refs/heads/main/metadata.md";
+const url =
+  "https://raw.githubusercontent.com/SaadFUB/hcds_project/refs/heads/main/metadata.md";
 
 const AboutPage = () => {
   const [markdown, setMarkdown] = useState("");
@@ -17,15 +18,19 @@ const AboutPage = () => {
       try {
         setLoading(true);
         const response = await fetch(url);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        
+
         const text = await response.text();
         setMarkdown(text);
       } catch (err) {
-        setError(`Failed to load markdown: ${err.message}`);
+        if (err instanceof Error) {
+          setError(`Failed to load markdown: ${err.message}`);
+        } else {
+          setError(`Failed to load markdown: Unknown error`);
+        }
       } finally {
         setLoading(false);
       }
