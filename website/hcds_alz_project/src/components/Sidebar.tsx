@@ -1,28 +1,29 @@
+"use client";
+
 import { useState } from "react";
-import { 
-  ChevronRight, 
-  Home, 
+import { usePathname } from "next/navigation";
+import {
+  ChevronRight,
+  Home,
   Settings,
   Search,
   File,
   UsersRoundIcon,
 } from "lucide-react";
-
-import { useLocation, Link } from "react-router-dom";
-
 import { cn } from "hcds/libs/utils";
+import Link from "next/link";
 
 const menuItems = [
-  { icon: Home, label: "Overview", active: true, hasSubmenu: false, path: "/"},
-  { icon: Settings, label: "Make a Prediction", path: "/prediction"},
-  { icon: Search, label: "Explanation", path: "/explanation"},
-  { icon: File, label: "About", path: "/about"},
-  { icon: UsersRoundIcon, label: "Team", path: "/team"},
+  { icon: Home, label: "Overview", path: "/" },
+  { icon: Settings, label: "Make a Prediction", path: "/prediction" },
+  { icon: Search, label: "Explanation", path: "/explanation" },
+  { icon: File, label: "About", path: "/about" },
+  { icon: UsersRoundIcon, label: "Team", path: "/team" },
 ];
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
 
   return (
     <div className={cn(
@@ -39,8 +40,7 @@ const Sidebar = () => {
           </h1>
         </div>
       </div>
-      
-      
+     
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         className={cn(
@@ -53,39 +53,28 @@ const Sidebar = () => {
           isCollapsed ? "rotate-0" : "rotate-180"
         )} />
       </button>
-      
+     
       <nav className="px-4 space-y-1 mt-4">
         {menuItems.map((item, index) => {
-          const isActive = item.path ? location.pathname === item.path : false;
-          
-          const content = (
-            <div className={cn(
-              "flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer transition-colors",
-              isActive 
-                ? "bg-blue-50 text-blue-700" 
-                : "text-gray-700 hover:bg-gray-50"
-            )}>
-              <div className="flex items-center space-x-3">
-                <item.icon className="w-5 h-5 flex-shrink-0" />
-                {!isCollapsed && (
-                  <span className="text-sm font-medium">{item.label}</span>
-                )}
-              </div>
-              {!isCollapsed && item.hasSubmenu && (
-                <ChevronRight className="w-4 h-4" />
-              )}
-            </div>
-          );
-
+          const isActive = pathname === item.path;
+         
           return (
             <div key={index} className="group">
-              {item.path ? (
-                <Link to={item.path}>
-                  {content}
-                </Link>
-              ) : (
-                content
-              )}
+              <Link href={item.path}>
+                <div className={cn(
+                  "flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer transition-colors",
+                  isActive
+                    ? "bg-blue-50 text-blue-700"
+                    : "text-gray-700 hover:bg-gray-50"
+                )}>
+                  <div className="flex items-center space-x-3">
+                    <item.icon className="w-5 h-5 flex-shrink-0" />
+                    {!isCollapsed && (
+                      <span className="text-sm font-medium">{item.label}</span>
+                    )}
+                  </div>
+                </div>
+              </Link>
             </div>
           );
         })}

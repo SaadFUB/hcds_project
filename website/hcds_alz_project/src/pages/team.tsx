@@ -1,5 +1,12 @@
+import Layout from "hcds/app/layout";
+
 const TeamPage = () => {
-  return <div>This is the Team Page</div>;
+    return (
+        <Layout>
+          <div>This is the Team Page</div>;
+        </Layout>
+      );
+
 };
 
 export default TeamPage;
