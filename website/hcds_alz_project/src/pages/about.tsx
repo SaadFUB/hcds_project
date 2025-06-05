@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github.css";
 import "./github-markdown.css";
-import { Layout } from "lucide-react";
+import Layout from "hcds/components/Layout";
 
 const url =
   "https://raw.githubusercontent.com/SaadFUB/hcds_project/refs/heads/main/metadata.md";

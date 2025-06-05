@@ -1,5 +1,11 @@
+
+import Layout from "hcds/components/Layout";
 const ExplanantionPage = () => {
-  return <div>This is the Explanation Page</div>;
+  return (
+    <Layout>
+      <div>This is the Explanation Page</div>
+    </Layout>
+  );
 };
 
 export default ExplanantionPage;

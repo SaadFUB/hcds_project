@@ -1,6 +1,6 @@
 // import { useState } from "react";
 
-import Layout from "hcds/app/layout";
+import Layout from "hcds/components/Layout";
 
 const InProgressPages = () => {
   // const [isCollapsed, setIsCollapsed] = useState(false);

@@ -1,4 +1,4 @@
-import Layout from "hcds/app/layout";
+import Layout from "hcds/components/Layout";
 
 const PredictionPage = () => {
   return (
