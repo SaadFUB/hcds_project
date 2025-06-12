@@ -1,6 +1,10 @@
 from fastapi import FastAPI
-from lr_model import lr_model
 import numpy as np
+import os
+import joblib
+
+lr_model_path = os.path.join(os.path.dirname(__file__), 'lr_model.joblib')
+lr_model = joblib.load(lr_model_path)
 
 app = FastAPI()
 
