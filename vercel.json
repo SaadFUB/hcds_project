@@ -3,14 +3,14 @@
     "name": "hcds-alz-project",
     "builds": [
         {
-            "src": "app/server.py",
+            "src": "server/app/server.py",
             "use": "@vercel/python"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "app/server.py"
+            "dest": "server/app/server.py"
         }
     ]
 }
