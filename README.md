@@ -10,7 +10,7 @@
 
 ---
 
-## 1. Dataset Description
+## Dataset Description
 
 <!-- Comment: Adjust your already present dataset documentation to fill out the question. Add more information. -->
 
@@ -28,7 +28,7 @@
 
 ---
 
-## 2. Decision-Making Scenario
+## Decision-Making Scenario
 
 <!-- 
 
@@ -60,7 +60,7 @@ Early treatment in Alzheimer's disease might slow down disease progression, wher
 
 ---
 
-## 3. Stakeholder Analysis
+## Stakeholder Analysis
 
 
 
@@ -180,3 +180,43 @@ Key Questions:
 - Is the model explainable?
 - How is patient consent and data privacy handled?
 - Are there biases in the training data?
+
+---
+
+## Primary Stakeholder
+
+Our **primary stakeholder** is the **physician (i.e., the primary care doctor)**. They are the intended end-user of the application and the person who will use the model’s output during patient consultations. Their needs and constraints will guide our design decisions, particularly around interpretability and transparent model explanations, while we prioritize the ethical use of features and bias minimization.
+
+### 1. What prior knowledge do the stakeholders need to use your application?
+The physician should have:
+- Basic digital literacy to navigate a clinical interface or electronic health records system.
+- Some basic medical knowledge related to Alzheimer’s disease and cognitive impairment. (Not strictly required, but it is a plus).  This can help the physician:
+  - Better understand the clinical relevance of the model's inputs and outputs
+  - Interpret the risk score and feature explanations more confidently
+  - Make more informed decisions about next steps (e.g., referrals or additional testing)
+The physician does not need prior knowledge of machine learning, statistical modeling, or programming. The application should be intuitive and require only clinically relevant inputs.
+
+### 2. What explanations might the stakeholder need?
+The physician might need:
+- A clear and concise prediction output, such as whether the patient is at risk of Alzheimer’s or not.
+- Some kind of score or risk probability (e.g., "78% chance of Alzheimer’s).
+- One or more visual summaries (e.g., bar charts) showing which features contributed most to the decision (e.g., SHAP values), presented in a simple, meaningful way.
+- An explanation of the key factors influencing the prediction (e.g., "Based on the patient’s age, history, etc.“).
+These can help the physician understand, trust, and justify the model's recommendation.
+
+### 3. What prior knowledge in data science is needed to understand the decision?
+None to minimal. The physician does not need to understand how the machine learning model works. The system should translate technical decisions into interpretable medical insights, similar to tools they already use.
+
+---
+
+## Individual Paper Prototypes
+
+![Individual Paper Prototype 1](https://github.com/user-attachments/assets/b411a527-d90e-42b5-a895-311f4f21481a)
+![Individual Paper Prototype 2](https://github.com/user-attachments/assets/bc57cc1f-80a0-42c4-bc64-a24b0d15568d)
+![Individual Paper Prototype 3](https://github.com/user-attachments/assets/4c7c9a2f-84e2-468d-9e7a-012acc64099e)
+![Individual Paper Prototype 4](https://github.com/user-attachments/assets/a505363e-873a-4a89-bb5e-d6fd35479618)
+![Individual Paper Prototype 5](https://github.com/user-attachments/assets/b97f19bf-eda4-457e-9e6c-13e8938f9dc4)
+
+## Group Paper Prototype
+
+![Group Paper Prototype](https://github.com/user-attachments/assets/01827246-e064-4244-8f9c-7702c1d03389)
