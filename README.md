@@ -220,3 +220,7 @@ None to minimal. The physician does not need to understand how the machine learn
 ## Group Paper Prototype
 
 ![Group Paper Prototype](https://github.com/user-attachments/assets/01827246-e064-4244-8f9c-7702c1d03389)
+
+## Paper Prototype Scenario Walkthrough
+
+![Paper Prototype Scenario Walkthrough](https://github.com/user-attachments/assets/5b0318cb-684b-42b1-87e7-947b8a8d4f78)
