@@ -21,17 +21,17 @@ with left:
             st.divider()
         l, r = st.columns([1, 5])
         with l:
-            st.image("static/img/placeholder.svg", width=100)
+            st.image("./static/img/placeholder.svg", width=100)
         with r:
             st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
         l, r = st.columns([1, 5])
         with l:
-            st.image("static/img/placeholder.svg", width=100)
+            st.image("./static/img/placeholder.svg", width=100)
         with r:
             st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
         l, r = st.columns([1, 5])
         with l:
-            st.image("static/img/placeholder.svg", width=100)
+            st.image("./static/img/placeholder.svg", width=100)
         with r:
             st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
 
@@ -45,17 +45,17 @@ with right:
             st.divider()
         l, r = st.columns([1, 5])
         with l:
-            st.image("static/img/placeholder.svg", width=100)
+            st.image("./static/img/placeholder.svg", width=100)
         with r:
             st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
         l, r = st.columns([1, 5])
         with l:
-            st.image("static/img/placeholder.svg", width=100)
+            st.image("./static/img/placeholder.svg", width=100)
         with r:
             st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
         l, r = st.columns([1, 5])
         with l:
-            st.image("static/img/placeholder.svg", width=100)
+            st.image("./static/img/placeholder.svg", width=100)
         with r:
             st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
         
