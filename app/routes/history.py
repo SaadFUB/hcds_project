@@ -1,5 +1,4 @@
-import streamlit as st_module
+import streamlit as st
 import pandas as pd
 import numpy as np
-def history(st: st_module):
-    pass
+st.title("History")

@@ -40,6 +40,7 @@ df = pd.read_csv("alzheimers_disease_data.csv")
 X = df.drop(columns=[TARGET] + DROP_FEATURES)
 y = df[TARGET]
 
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, test_size=0.2, random_state=10)
 
 ros = RandomOverSampler(random_state=10)
@@ -70,7 +71,9 @@ rf_model.fit(X_resampled_transformed, y_resampled)
 joblib.dump(rf_model, os.path.join(SAVE_DIR, 'rf_model.pkl'))
 
 # Neural Network (MLP)
-nn_model = MLPClassifier(hidden_layer_sizes=(50, 25), max_iter=500, random_state=42)
+nn_model = MLPClassifier(hidden_layer_sizes=(25, 50), max_iter=500, random_state=42, activation='relu',            
+    solver='adam',                 
+    alpha=1e-4,)
 nn_model.fit(X_resampled_transformed, y_resampled)
 joblib.dump(nn_model, os.path.join(SAVE_DIR, 'nn_model.pkl'))
 

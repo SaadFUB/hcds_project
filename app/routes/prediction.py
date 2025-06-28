@@ -1,5 +1,5 @@
-import streamlit as st_module
+import streamlit as st
 import pandas as pd
 import numpy as np
-def prediction(st: st_module):
-    pass
+
+st.title("Prediction")

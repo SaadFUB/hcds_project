@@ -1,5 +1,5 @@
-import streamlit as st_module
+import streamlit as st
 import pandas as pd
 import numpy as np
-def team(st: st_module):
+def team():
     pass
