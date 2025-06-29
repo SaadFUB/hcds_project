@@ -4,8 +4,10 @@ import numpy as np
 
 # st.title("Team")
 
-st.markdown("<h1 style='text-align: center;'>Our team</h1>", unsafe_allow_html=True)
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+# st.markdown("<h1 style='text-align: center;'>Our team</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; margin-bottom: 0.9em'>Our team</h2>", unsafe_allow_html=True)
+# st.markdown("---")
+# st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
 
 names = ["Nino Sabella", "Saad Waseem", "Jingren Dai", "Ayse Yasemin Mutlugil", "Orkun Akyol"]
 degrees = [

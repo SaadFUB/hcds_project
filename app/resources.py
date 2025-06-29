@@ -18,10 +18,12 @@ def find_file(filename):
 
 
 
-left, middle, right = st.columns([2, 1.2, 2])
+# left, middle, right = st.columns([2, 6, 2])
+# with middle:
+# st.title("Resources")
 
-with middle:
-    st.title("Resources")
+st.markdown("<h2 style='text-align: center; margin-bottom: 0.9em'>Helpful resources</h2>", unsafe_allow_html=True)
+# st.markdown("---")
 
 left, middle, right = st.columns([5, 1, 5])
 

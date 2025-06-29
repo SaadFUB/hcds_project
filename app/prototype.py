@@ -22,3 +22,5 @@ pg = st.navigation(
 )
 
 pg.run()
+
+# st.sidebar.image("images/ribbon.png", use_column_width=True)
