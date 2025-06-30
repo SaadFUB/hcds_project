@@ -84,7 +84,7 @@ def predict(input_features, model_name):
     features = pd.DataFrame([features], columns=REQUIRED_FEATURES)
 
     # features = preprocessing_pipeline.transform(features)
-    print(type(preprocessing_pipeline ))
+    # print(type(preprocessing_pipeline ))
     print(features)
 
     if model_name == 'Logistic Regression':
