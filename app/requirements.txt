@@ -7,3 +7,4 @@ matplotlib
 streamlit
 plotly
 google-genai
+ipython
