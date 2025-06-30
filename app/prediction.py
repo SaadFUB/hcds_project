@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 from production.inference import REQUIRED_FEATURES
 from production.inference import predict
 from production.inference import load_random_row
