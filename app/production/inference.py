@@ -15,6 +15,7 @@ import plotly.graph_objects as go
 from sklearn.inspection import partial_dependence
 from google import genai
 from google.genai import types
+from fileloader import find_file
 
 
 shap.initjs()
@@ -54,19 +55,19 @@ categorical_mappings = {
         'Forgetfulness': {'No': 0, 'Yes': 1}
     }
 
-df = pd.read_csv("production/alzheimers_disease_data.csv")
+df = pd.read_csv(find_file("production/alzheimers_disease_data.csv"))
 
 # with open(os.path.join(SAVE_DIR, 'pre_processor.pkl'), 'rb') as f:
 #     preprocessing_pipeline  = load(f)
 
-logistic_model = load(os.path.join(SAVE_DIR, 'logistic_model.pkl'))
-rf_model = load(os.path.join(SAVE_DIR, 'rf_model.pkl'))
-nn_model = load(os.path.join(SAVE_DIR, 'nn_model.pkl'))
+logistic_model = load(find_file('logistic_model.pkl'))
+rf_model = load(find_file('rf_model.pkl'))
+nn_model = load(find_file('nn_model.pkl'))
 
-logistic_explainer = load(os.path.join(SAVE_DIR, 'logistic_explainer.pkl'))
-rf_explainer = load(os.path.join(SAVE_DIR, 'rf_explainer.pkl'))
-background_data = np.load(os.path.join(SAVE_DIR, 'background_data.npy'))
-nn_explainer = load(os.path.join(SAVE_DIR, 'nn_explainer.pkl'))
+logistic_explainer = load(find_file('logistic_explainer.pkl'))
+rf_explainer = load(find_file('rf_explainer.pkl'))
+background_data = np.load(find_file('background_data.npy'))
+nn_explainer = load(find_file('nn_explainer.pkl'))
 
 def get_feature_values(input_features):
     return [

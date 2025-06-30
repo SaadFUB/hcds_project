@@ -1,10 +1,11 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from fileloader import find_file
 
 col1, col2, col3 = st.columns([3, 3, 3])
 with col2:
-    st.image("images/remedi.png")
+    st.image(find_file("images/remedi.png"))
 
 with st.container():
     st.markdown(
