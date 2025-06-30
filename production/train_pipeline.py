@@ -11,6 +11,7 @@ from imblearn.over_sampling import RandomOverSampler
 from sklearn.metrics import classification_report, accuracy_score
 import shap
 import joblib
+import cloudpickle
 import os
 
 # ---------------------------- Configurations ---------------------------
@@ -36,7 +37,7 @@ SAVE_DIR = 'model_artifacts'
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 # ----------------------------- Data Loading and Processing -----------------
-df = pd.read_csv("alzheimers_disease_data.csv")
+df = pd.read_csv("production/alzheimers_disease_data.csv")
 X = df.drop(columns=[TARGET] + DROP_FEATURES)
 y = df[TARGET]
 
@@ -56,7 +57,9 @@ preprocessing_pipeline = Pipeline(steps=[('preprocessor', preprocessor)])
 X_resampled_transformed = preprocessing_pipeline.fit_transform(X_resampled)
 X_test_transformed = preprocessing_pipeline.transform(X_test)
 
-joblib.dump(preprocessing_pipeline, os.path.join(SAVE_DIR, 'preprocessor.pkl'))
+# joblib.dump(preprocessing_pipeline, os.path.join(SAVE_DIR, 'preprocessor.pkl'))
+with open(os.path.join(SAVE_DIR, 'pre_processor.pkl'), 'wb') as f:
+    cloudpickle.dump(preprocessing_pipeline, f)
 
 # ----------------------------- Training Models -----------------
 

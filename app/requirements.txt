@@ -1,0 +1,11 @@
+joblib
+pandas
+numpy
+shap
+scikit-learn
+matplotlib
+streamlit
+plotly
+google-genai
+ipython
+scikit-learn==1.4.2
