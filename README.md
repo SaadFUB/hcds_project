@@ -230,3 +230,77 @@ None to minimal. The physician does not need to understand how the machine learn
 ### Scenario Walkthrough with Wireframes
 
 ![Wireframe Scenario Walkthrough](https://github.com/user-attachments/assets/64689bf6-8299-4a99-a507-e916bbcb4966)
+
+---
+
+## Interview Guide
+
+### 1. Define User Needs & Key Questions
+
+**Main User Needs:**
+
+- Predict Alzheimer’s risk.
+- Understand the reasoning behind the prediction.
+- Decide what actions to take based on the prediction.
+- Find trustworthy information/resources for patient education.
+- Understand how the model works and how reliable it is.
+
+**Possible user interview questions:**
+
+- What do you expect from a tool that helps assess Alzheimer’s risk?
+- How important is it for you to understand how the prediction was made?
+- What would help you trust a prediction made by a tool like this?
+- Would such a tool change how you interact with your patients
+
+### 2. Ask for Consent
+
+*Before we begin, we would like to ask for your consent to use your responses anonymously for our project presentation and evaluation.*
+
+### 3. Introduce the Scenario
+
+*We developed a tool that assesses a patient’s risk of developing Alzheimer’s based on their demographic, health and lifestyle data. The prediction of the tool is not supposed to replace medical advice, it is only meant to support the physicians in their decision making process. Today, you will imagine that you are a physician and you are trying out our tool for the first time.*
+
+### 4. Warm-up Questions
+
+- Have you ever used any apps or tools to track your well-being?
+- If yes, what were your expectations when using such tools?
+- Have you or someone close to you ever worried about cognitive issues?
+- Who do you think would use an app like this?
+
+### 5.1 Tasks - Prototype Walkthrough
+
+*Now we’ll walk through the prototype together. Please think aloud as you go - describe what you see, what you’re thinking, and what you expect to happen.*
+
+**Homepage**
+**Q:** What do you think you can do here?
+**Task 1:** You now want to make a prediction - how would you proceed?
+
+**Making a Prediction**
+**Q:** What do you think you can do here?
+**Q:** Are any of the input fields unclear?
+**Task 2:** Please fill in the patient’s data and make a prediction.
+
+**Understanding the Prediction**
+**Task 3:** Now try to understand the prediction shown without clicking further. What do you understand from it?
+**Task 4:** Can you interpret the graphs to understand why this prediction was made? Is the text explanation helpful?
+**Task 5:** Does this result lead you to take any specific action (e.g., referral, patient education)? If so, what?
+
+**Providing Resources**
+**Task 6:** Now you would like to provide your patient with some relevant resources. Where would you look?
+**Q:** What do you think about this page?
+
+**Understanding the Model**
+**Task 7:** Now you want to understand how the model works. Where do you expect to find this information?
+**Q:** What do you think about this page?
+
+### 5.2 Post-Interview Feedback Questions: 
+
+- What did you like (or dislike) most about the app?
+- If you could change one thing about the app, what would it be?
+- Would you trust this app’s predictions? Why or why not?
+- Is there anything missing that you would expect to see in this kind of app?
+- How do you feel about privacy in this context?
+
+### 6. Finish and Goodbyes
+
+*That is all on our side! Thank you so much for your feedback. Is there anything else you would like to share?*
