@@ -56,8 +56,8 @@ categorical_mappings = {
 
 df = pd.read_csv("production/alzheimers_disease_data.csv")
 
-with open(os.path.join(SAVE_DIR, 'pre_processor.pkl'), 'rb') as f:
-    preprocessing_pipeline  = load(f)
+# with open(os.path.join(SAVE_DIR, 'pre_processor.pkl'), 'rb') as f:
+#     preprocessing_pipeline  = load(f)
 
 logistic_model = load(os.path.join(SAVE_DIR, 'logistic_model.pkl'))
 rf_model = load(os.path.join(SAVE_DIR, 'rf_model.pkl'))
