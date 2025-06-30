@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from fileloader import find_file
 
 # st.title("How does our tool work?")
 st.markdown("<h2 style='text-align: center;'>How does our tool work?</h2>", unsafe_allow_html=True)
@@ -35,7 +36,7 @@ with st.container(border=True):
 # st.markdown("#### Training dataset and metadata", unsafe_allow_html=True)
 
 # Reading and displaying metadata from Git repo
-with open("../metadata.md", "r") as f:
+with open(find_file("metadata.md"), "r") as f:
     metadata_content = f.read()
 st.markdown(metadata_content, unsafe_allow_html=True)
 
