@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from fileloader import find_file
 
 # st.title("Team")
 
@@ -18,11 +19,11 @@ degrees = [
     "MSc Data Science"
 ]
 photo_paths = [
-    "images/nino.jpeg",
-    "images/saad.jpeg",
-    "images/david.jpg",
-    "images/yasemin.jpeg",
-    "images/orkun.jpg"
+    find_file("images/nino.jpeg"),
+    find_file("images/saad.jpeg"),
+    find_file("images/david.jpg"),
+    find_file("images/yasemin.jpeg"),
+    find_file("images/orkun.jpg")
 ]
 linkedin_links = [
     "https://www.linkedin.com/in/nino-sabella-429046207/",
