@@ -18,62 +18,60 @@ def find_file(filename):
 
 
 
-left, middle, right = st.columns([2, 1, 2])
+# left, middle, right = st.columns([2, 6, 2])
+# with middle:
+# st.title("Resources")
 
-with middle:
-    st.title("Resources")
+st.markdown("<h2 style='text-align: center; margin-bottom: 0.9em'>Helpful resources</h2>", unsafe_allow_html=True)
+# st.markdown("---")
 
 left, middle, right = st.columns([5, 1, 5])
 
 with left:
     with st.container(border=True):
-        l, m, r = st.columns([2, 1, 2])
+        l, m, r = st.columns([2, 2.7, 2])
         with m:
-            st.write("For Patients")
-        l, m, r = st.columns([1, 5, 1])
-        with m:
+            st.markdown(
+                "<div style='font-size: 1.7em; font-weight: 600; margin-bottom: 0.01em; margin-top: 0.5em; text-align: center;'>For Patients</div>",
+                unsafe_allow_html=True
+            )
             st.divider()
-        l, r = st.columns([1, 5])
-        with l:
-            st.image(find_file("placeholder.svg"), width=100)
-        with r:
-            st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
-        l, r = st.columns([1, 5])
-        with l:
-            st.image(find_file("placeholder.svg"), width=100)
-        with r:
-            st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
-        l, r = st.columns([1, 5])
-        with l:
-            st.image(find_file("placeholder.svg"), width=100)
-        with r:
-            st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
+        for i in range(3):
+            img_col, text_col = st.columns([1, 4])
+            with img_col:
+                st.image(str(find_file("placeholder.svg")), width=60)
+            with text_col:
+                st.markdown(f"**Resource {i+1}**")
+                st.write(
+                    "Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. "
+                    "Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, "
+                    "non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. "
+                    "Ut pharetra hendrerit ornare."
+                )
 
 with right:
     with st.container(border=True):
-        l, m, r = st.columns([2, 1, 2])
+        l, m, r = st.columns([2, 2.5, 2])
         with m:
-            st.write("For Doctors")
-        l, m, r = st.columns([1, 5, 1])
-        with m:
+            st.markdown(
+                "<div style='font-size: 1.7em; font-weight: 600; margin-bottom: 0.01em; margin-top: 0.5em; text-align: center;'>For Doctors</div>",
+                unsafe_allow_html=True
+            )
             st.divider()
-        l, r = st.columns([1, 5])
-        with l:
-            st.image(find_file("placeholder.svg"), width=100)
-        with r:
-            st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
-        l, r = st.columns([1, 5])
-        with l:
-            st.image(find_file("placeholder.svg"), width=100)
-        with r:
-            st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
-        l, r = st.columns([1, 5])
-        with l:
-            st.image(find_file("placeholder.svg"), width=100)
-        with r:
-            st.write("Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. Ut pharetra hendrerit ornare. Aenean et ipsum id augue ultricies consectetur at et nisl. Quisque mauris neque, blandit id mauris eget, luctus lobortis urna. Aenean eu nisi vitae leo commodo laoreet. ")
-        
-        
+        for i in range(3):
+            img_col, text_col = st.columns([1, 4])
+            with img_col:
+                st.image(str(find_file("placeholder.svg")), width=60)
+            with text_col:
+                st.markdown(f"**Resource {i+1}**")
+                st.write(
+                    "Nullam convallis urna non leo sollicitudin, non suscipit massa molestie. "
+                    "Vivamus mollis semper viverra. Integer condimentum libero et neque imperdiet, "
+                    "non efficitur mi posuere. Morbi vel eros fringilla, aliquam enim ut, mollis elit. "
+                    "Ut pharetra hendrerit ornare."
+                )
+
+
 
 
 

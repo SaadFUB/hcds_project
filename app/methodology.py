@@ -39,6 +39,7 @@ with open("../metadata.md", "r") as f:
     metadata_content = f.read()
 st.markdown(metadata_content, unsafe_allow_html=True)
 
+
 st.markdown("### Other important concepts")
 
 with st.container():
