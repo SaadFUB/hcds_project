@@ -270,29 +270,29 @@ None to minimal. The physician does not need to understand how the machine learn
 ### 5.1 Tasks - Prototype Walkthrough
 
 *Now we’ll walk through the prototype together. Please think aloud as you go - describe what you see, what you’re thinking, and what you expect to happen.*
-
-**Homepage**
-**Q:** What do you think you can do here?
-**Task 1:** You now want to make a prediction - how would you proceed?
-
-**Making a Prediction**
-**Q:** What do you think you can do here?
-**Q:** Are any of the input fields unclear?
-**Task 2:** Please fill in the patient’s data and make a prediction.
-
-**Understanding the Prediction**
-**Task 3:** Now try to understand the prediction shown without clicking further. What do you understand from it?
-**Task 4:** Can you interpret the graphs to understand why this prediction was made? Is the text explanation helpful?
-**Task 5:** Does this result lead you to take any specific action (e.g., referral, patient education)? If so, what?
-
-**Providing Resources**
-**Task 6:** Now you would like to provide your patient with some relevant resources. Where would you look?
-**Q:** What do you think about this page?
-
-**Understanding the Model**
-**Task 7:** Now you want to understand how the model works. Where do you expect to find this information?
-**Q:** What do you think about this page?
-
+  
+**Homepage**  
+**Q:** What do you think you can do here?  
+**Task 1:** You now want to make a prediction - how would you proceed?  
+  
+**Making a Prediction**  
+**Q:** What do you think you can do here?  
+**Q:** Are any of the input fields unclear?  
+**Task 2:** Please fill in the patient’s data and make a prediction.  
+    
+**Understanding the Prediction**  
+**Task 3:** Now try to understand the prediction shown without clicking further. What do you understand from it?  
+**Task 4:** Can you interpret the graphs to understand why this prediction was made? Is the text explanation helpful?  
+**Task 5:** Does this result lead you to take any specific action (e.g., referral, patient education)? If so, what?  
+  
+**Providing Resources**  
+**Task 6:** Now you would like to provide your patient with some relevant resources. Where would you look?  
+**Q:** What do you think about this page?  
+  
+**Understanding the Model**  
+**Task 7:** Now you want to understand how the model works. Where do you expect to find this information?  
+**Q:** What do you think about this page?  
+  
 ### 5.2 Post-Interview Feedback Questions: 
 
 - What did you like (or dislike) most about the app?
