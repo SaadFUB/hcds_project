@@ -16,6 +16,8 @@ from sklearn.inspection import partial_dependence
 from google import genai
 from google.genai import types
 from fileloader import find_file
+from sklearn.metrics import roc_curve, roc_auc_score, confusion_matrix, classification_report
+import seaborn as sns
 
 
 shap.initjs()
@@ -56,6 +58,8 @@ categorical_mappings = {
     }
 
 df = pd.read_csv(find_file("production/alzheimers_disease_data.csv"))
+X = df.drop(columns=["Diagnosis", "DoctorInCharge", "PatientID"])
+y = df["Diagnosis"]
 
 # with open(os.path.join(SAVE_DIR, 'pre_processor.pkl'), 'rb') as f:
 #     preprocessing_pipeline  = load(f)
@@ -63,6 +67,12 @@ df = pd.read_csv(find_file("production/alzheimers_disease_data.csv"))
 logistic_model = load(find_file('logistic_model.pkl'))
 rf_model = load(find_file('rf_model.pkl'))
 nn_model = load(find_file('nn_model.pkl'))
+
+models = {
+    "Logistic Regression": logistic_model,
+    "Random Forest": rf_model,
+    "Neural Network": nn_model
+}
 
 logistic_explainer = load(find_file('logistic_explainer.pkl'))
 rf_explainer = load(find_file('rf_explainer.pkl'))
@@ -320,4 +330,95 @@ def explain_shap_values(shap_dict):
             full_string += chunk.text
 
     return full_string
+
+
+    #----------------------------- Methodology Utils ------------------
+
+def model_performance():
+    metrics_df = pd.DataFrame(columns=["Model", "Accuracy", "Precision", "Recall", "F1 Score", "AUC"])
+
+    fig_roc, ax = plt.subplots()
+    for name, model in models.items():
+        y_pred = model.predict(X)
+        y_proba = model.predict_proba(X)[:, 1]
+
+        acc = np.mean(y_pred == y)
+        precision = np.round((y_pred & y).sum() / max(y_pred.sum(), 1), 2)
+        recall = np.round((y_pred & y).sum() / max(y.sum(), 1), 2)
+        f1 = 2 * (precision * recall) / max((precision + recall), 1)
+        auc = roc_auc_score(y, y_proba)
+
+        metrics_df.loc[len(metrics_df)] = [name, acc, precision, recall, f1, auc]
+
+        fpr, tpr, _ = roc_curve(y, y_proba)
+        ax.plot(fpr, tpr, label=f"{name} (AUC = {auc:.2f})")
+
+    ax.plot([0, 1], [0, 1], linestyle='--')
+    ax.set_title("ROC Curves")
+    ax.set_xlabel("False Positive Rate")
+    ax.set_ylabel("True Positive Rate")
+    ax.legend()
+
+    return fig_roc, metrics_df
+
+def feature_importance():
+    col1, col2, col3, col4 = st.columns([0.5,1,1, 0.5])
+    for name, model in models.items():
+        if name == "Logistic Regression":
+            with col2:
+                st.subheader(name)
+                coefs = model.coef_[0]
+                feature_df = pd.DataFrame({"Feature": X.columns, "Coefficient": coefs})
+                feature_df["Odds Ratio"] = np.exp(feature_df["Coefficient"])
+                feature_df = feature_df.sort_values(by="Coefficient", key=np.abs, ascending=False)
+                fig, ax = plt.subplots()
+                sns.barplot(x="Coefficient", y="Feature", data=feature_df.head(10), ax=ax)
+                st.pyplot(fig)
+        elif name == "Random Forest":
+            with col2:
+                st.subheader(name)
+                importances = model.feature_importances_
+                feature_df = pd.DataFrame({"Feature": X.columns, "Importance": importances})
+                feature_df = feature_df.sort_values(by="Importance", ascending=False)
+                fig, ax = plt.subplots()
+                sns.barplot(x="Importance", y="Feature", data=feature_df.head(10), ax=ax)
+                st.pyplot(fig)
+        else:
+            with col3:
+                st.subheader(name)
+                shap_values = np.load(find_file("background.npy"), allow_pickle=True)
+                print(shap_values.shape)
+                fig, ax = plt.subplots()
+                shap.summary_plot(shap_values[:,:,1], X)
+                st.pyplot(fig)
+
+def data_transparency():
+    col1, col2, col3 = st.columns([1,0.5,1])
+    with col1:
+        st.markdown("### Feature Distributions by Diagnosis")
+        selected_feature = st.selectbox("Select a feature", X.columns)
+        fig, ax = plt.subplots()
+        sns.kdeplot(data=df, x=selected_feature, hue="Diagnosis", ax=ax)
+        st.pyplot(fig)
+
+    with col3:
+        st.markdown("### Correlation Heatmap")
+        fig, ax = plt.subplots(figsize=(10, 8))
+        sns.heatmap(df.corr(), cmap="coolwarm", annot=False, ax=ax)
+        st.pyplot(fig)
+
+def fairness():
+    col1, col2, col3 = st.columns([1,1,1])
+    with col2:
+        demographic_feature = st.selectbox("Demographic Feature:", ["Age", "Gender", "Ethnicity", "EducationLevel"])
+        selected_model = st.selectbox("Select a model", list(models.keys()))
+        if demographic_feature:
+            fig, ax = plt.subplots()
+            subgroup_data = df.copy()
+            subgroup_data["prediction"] = models[selected_model].predict(X)
+            bias_df = pd.crosstab(subgroup_data[demographic_feature], subgroup_data["prediction"], normalize='index')
+            bias_df.plot(kind='bar', stacked=True, ax=ax, colormap="coolwarm")
+            ax.set_ylabel("Prediction Distribution")
+            ax.set_title(f"Prediction Bias across {demographic_feature}")
+            st.pyplot(fig)
 
