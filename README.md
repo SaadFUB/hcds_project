@@ -265,7 +265,6 @@ None to minimal. The physician does not need to understand how the machine learn
 - Have you ever used any apps or tools to track your well-being?
 - If yes, what were your expectations when using such tools?
 - Have you or someone close to you ever worried about cognitive issues?
-- Who do you think would use an app like this?
 
 ### 5.1 Tasks - Prototype Walkthrough
 
