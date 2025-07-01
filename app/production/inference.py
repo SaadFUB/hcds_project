@@ -404,7 +404,8 @@ def data_transparency():
     with col3:
         st.markdown("### Correlation Heatmap")
         fig, ax = plt.subplots(figsize=(10, 8))
-        sns.heatmap(df.corr(), cmap="coolwarm", annot=False, ax=ax)
+        corr_df = df.drop(columns=["Diagnosis", "DoctorInCharge", "PatientID"])
+        sns.heatmap(corr_df.corr(), cmap="coolwarm", annot=False, ax=ax)
         st.pyplot(fig)
 
 def fairness():
