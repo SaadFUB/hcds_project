@@ -110,10 +110,8 @@ def predict(input_features, model_name):
     
     return prediction
 
-def explain_waterfall(input_features, model_name):
-    
+def explain_waterfall(input_features, model_name, return_fig=False):
     feature_values = get_feature_values(input_features)
-
     features = np.array(feature_values)
     features = pd.DataFrame([features], columns=REQUIRED_FEATURES)
 
@@ -128,19 +126,14 @@ def explain_waterfall(input_features, model_name):
         expected_value = explainer.expected_value[1]
 
     shap_values = explainer.shap_values(features)
-
     if model_name == 'Neural Network':
         shap_values = shap_values[:,:,1]
-    
-    print("Waterfall Explainer:", explainer.expected_value)
-    
+
     explanation = shap.Explanation(
         values=shap_values,
         base_values=expected_value,
         data=features
     )
-
-    print("Waterfall explanation:", explanation.shape, "shap_values:", shap_values.shape)
 
     if model_name == 'Logistic Regression':
         waterfall_explanation = explanation[0]
@@ -148,13 +141,16 @@ def explain_waterfall(input_features, model_name):
         waterfall_explanation = explanation[0,:,1]
     elif model_name == 'Neural Network':
         waterfall_explanation = explanation[0]
-    
-    plt.figure(figsize=(10, 6))
-    shap.plots.waterfall(waterfall_explanation, show=False)
-    st.pyplot(plt.gcf(), clear_figure=True)
-    plt.close()
 
     data = dict(zip(REQUIRED_FEATURES, waterfall_explanation.values))
+
+    # Only generate the plot if requested
+    if return_fig:
+        plt.figure(figsize=(10, 6))
+        shap.plots.waterfall(waterfall_explanation, show=False)
+        fig = plt.gcf()
+        plt.close()
+        return data, fig
 
     return data
 
@@ -195,10 +191,13 @@ def explain_force(input_features, model_name):
     st.pyplot(plt.gcf(), clear_figure=True)
     plt.close()
 
-def violin_with_user_value(feature_name, input_features):
+import textwrap
 
+def wrap_text(text, width=35):
+    return '<br>'.join(textwrap.wrap(text, width=width))  # for plotly, use <br> for line breaks
+
+def violin_with_user_value(feature_name, input_features, key=None):
     feature_values = get_feature_values(input_features)
-
     fig = px.violin(df, y=feature_name, box=True, points=False)
     fig.add_trace(go.Scatter(
         y=[feature_values[REQUIRED_FEATURES.index(feature_name)]],
@@ -207,14 +206,14 @@ def violin_with_user_value(feature_name, input_features):
         marker=dict(color='red', size=12),
         name="User Value"
     ))
-    fig.update_layout(title=f"Distribution of {feature_name} with User's Value")
+    fig.update_layout(
+        title=wrap_text(f"Distribution of {feature_name} with User's Value"),
+        yaxis_title=wrap_text(feature_name)
+    )
+    st.plotly_chart(fig, use_container_width=True, key=key)
 
-    st.plotly_chart(fig, use_container_width=True)
-
-def pdp_with_user_value(feature_name, input_features, model_name):
-    
+def pdp_with_user_value(feature_name, input_features, model_name, key=None):
     current_df = df.drop(columns=["Diagnosis", "DoctorInCharge", "PatientID"])
-
     feature_values = get_feature_values(input_features)
     current_value = feature_values[REQUIRED_FEATURES.index(feature_name)]
 
@@ -228,12 +227,9 @@ def pdp_with_user_value(feature_name, input_features, model_name):
     pd_result = partial_dependence(model, current_df, [feature_name], kind='average', grid_resolution=50)
     feature_vals = pd_result['values'][0]
     pdp_values = pd_result['average'][0]
-
     user_pred = np.interp(current_value, feature_vals, pdp_values)
 
-    
     fig = go.Figure()
-
     fig.add_trace(go.Scatter(
         x=feature_vals,
         y=pdp_values,
@@ -241,8 +237,6 @@ def pdp_with_user_value(feature_name, input_features, model_name):
         name='Partial Dependence',
         line=dict(color='blue')
     ))
-
-    
     fig.add_trace(go.Scatter(
         x=[current_value],
         y=[user_pred],
@@ -254,13 +248,13 @@ def pdp_with_user_value(feature_name, input_features, model_name):
     ))
 
     fig.update_layout(
-        title=f"Partial Dependence of {feature_name}",
-        xaxis_title=feature_name,
+        title=wrap_text(f"Partial Dependence of {feature_name}"),
+        xaxis_title=wrap_text(feature_name),
         yaxis_title="Model Prediction",
         showlegend=True
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True, key=key)
 
     
     
