@@ -9,7 +9,7 @@ from production.inference import pdp_with_user_value
 from production.inference import explain_shap_values
 
 
-st.set_page_config(page_title="Alzheimer's Risk Assessment", layout="wide")
+#st.set_page_config(page_title="Alzheimer's Risk Assessment", layout="wide")
 
 NUM_FEATURES = [
     'Age', 'BMI', 'AlcoholConsumption', 'PhysicalActivity', 'DietQuality', 'SleepQuality',
@@ -95,12 +95,15 @@ col1, col2 = st.columns(2)
 
 with col1:
     smoking = st.selectbox("Smoking", categorical_options['Smoking'])
-    alcohol = st.number_input("Alcohol Consumption (drinks/week)", **numerical_config['AlcoholConsumption'])
-    physical_activity = st.slider("Physical Activity Level (0-10)", **numerical_config['PhysicalActivity'])
+    alcohol = st.number_input("Alcohol Consumption (drinks/week)", **numerical_config['AlcoholConsumption'])    
 
 with col2:
-    diet_quality = st.slider("Diet Quality (0-10)", **numerical_config['DietQuality'])
-    sleep_quality = st.slider("Sleep Quality (4-10)", **numerical_config['SleepQuality'])
+    diet_quality = st.slider("Diet Quality (0-10)", **numerical_config['DietQuality'],
+                             help="self reported, 0=a very poor diet, 10=very healthy diet")
+    sleep_quality = st.slider("Sleep Quality (4-10)", **numerical_config['SleepQuality'],
+                              help ="self reported, 4=very poor sleep, 10=excellent, restful sleep")
+    physical_activity = st.slider("Physical Activity Level (0-10)", **numerical_config['PhysicalActivity'],
+                                  help="Weekly physical activity in hours")
 
 st.markdown("---")
 
@@ -111,11 +114,11 @@ with col1:
     family_history = st.selectbox("Family History of Alzheimer's", categorical_options['FamilyHistoryAlzheimers'])
     head_injury = st.selectbox("History of Head Injury", categorical_options['HeadInjury'])
     cardiovascular = st.selectbox("Cardiovascular Disease", categorical_options['CardiovascularDisease'])
-    diabetes = st.selectbox("Diabetes", categorical_options['Diabetes'])
 
 with col2:
     depression = st.selectbox("Depression", categorical_options['Depression'])
     hypertension = st.selectbox("Hypertension", categorical_options['Hypertension'])
+    diabetes = st.selectbox("Diabetes", categorical_options['Diabetes'])
 
 st.markdown("---")
 
@@ -154,12 +157,13 @@ col1, col2 = st.columns(2)
 with col1:
     mmse = st.number_input("MMSE Score (0-30)", **numerical_config['MMSE'],
                          help="Mini-Mental State Examination. Normal: 24-30")
-    functional_assessment = st.slider("Functional Assessment (0-10)", **numerical_config['FunctionalAssessment'],
-                                    help="Overall functional ability")
+
 
 with col2:
     adl = st.slider("Activities of Daily Living (0-10)", **numerical_config['ADL'],
                    help="Independence in daily activities")
+    functional_assessment = st.slider("Functional Assessment (0-10)", **numerical_config['FunctionalAssessment'],
+                                    help="Overall functional ability")
 
 st.markdown("---")
 
@@ -177,7 +181,6 @@ with col2:
     difficulty_tasks = st.selectbox("Difficulty Completing Tasks", categorical_options['DifficultyCompletingTasks'])
     forgetfulness = st.selectbox("Forgetfulness", categorical_options['Forgetfulness'])
 
-st.session_state.model = st.selectbox("Select Model", models)
 
 st.markdown("---")
 
@@ -202,7 +205,7 @@ form_data = {
 
 st.session_state.form_data = form_data
 
-col1, col2, col3 = st.columns([1, 1, 1])
+col1, col2 = st.columns([1, 1])
 
 with col1:
     if st.button("Reset Form", use_container_width=True):
@@ -217,60 +220,56 @@ with col2:
         st.session_state.update_prediction = True
         
         st.success("Data submitted successfully! Loading Prediction...")
-        
+    
 
-with col3:
-    if st.button("Randomize Prediction", use_container_width=True, type="secondary"):
-        st.session_state.form_data = load_random_row()
-        st.session_state.update_prediction = True
-        st.session_state.show_prediction = True
-        st.success("Random Data submitted successfully! Loading Prediction...")
+
+def get_top_features(form_data, model_name, n=5):
+    shap_values = explain_waterfall(form_data, model_name, return_fig=False)
+    top_features = sorted(shap_values, key=lambda x: abs(shap_values[x]), reverse=True)
+    return top_features[:n]
 
 
 if st.session_state.show_prediction:
     if st.session_state.update_prediction:
         st.session_state.update_prediction = False
-        
-        prediction = predict(st.session_state.form_data, st.session_state.model)
 
-        
-        col1, col2, col3 = st.columns([1, 1, 1])
-        
-        with col2:
-            st.markdown('<h2 style="text-align: center;">Risk of Alzheimer\'s</h2>', unsafe_allow_html=True)
-            st.markdown(f"""<div style="width: 80px; height: 80px; 
+        predictions = {model: predict(st.session_state.form_data, model) for model in models}
+
+        st.markdown('<h2 style="text-align: center;">Risk of Alzheimer\'s: Model Comparison</h2>', unsafe_allow_html=True)
+        cols = st.columns(len(models))
+        for i, model in enumerate(models):
+            with cols[i]:
+                st.markdown(f"<div style='font-size:1.1rem; font-weight:600; margin-bottom:10px'>{model}</div>",
+                            unsafe_allow_html=True)
+                st.markdown(
+                    f"""<div style="width: 80px; height: 80px; 
                             border-radius: 50%; background-color: #858481; 
                             display: flex; align-items: center; 
                             justify-content: center; color: white; 
-                            margin: 10px auto;">{int(prediction["probability"][0][1] * 100)}%</div>""", 
-                        unsafe_allow_html=True)
-        
+                            margin: 10px auto;">{int(predictions[model]["probability"][0][1] * 100)}%</div>""",
+                    unsafe_allow_html=True
+                )
 
-        col1, col2, col3 = st.columns([1, 5, 1])
+        exp_tabs = st.tabs(models)
+        for i, model in enumerate(models):
+            with exp_tabs[i]:
+                explain_force(st.session_state.form_data, model)
+                data, fig = explain_waterfall(st.session_state.form_data, model, return_fig=True)
+                st.pyplot(fig)
+                st.write(explain_shap_values(data))
 
-        with col2:
-            with st.expander("User vs Population Distributions", expanded=True):
-                
-                pop_features = ['FunctionalAssessment', 'ADL' , 'MemoryComplaints', 'BehavioralProblems', 'MMSE', 'CholesterolTriglycerides', 'Age', 'PhysicalActivity']
-                tabs = st.tabs(pop_features)
+        st.markdown("---")
+        st.markdown(f"### Top Influential Features: User vs Population")
 
-                for tab, feature in zip(tabs, pop_features):
+
+        for model in models:
+            top_features = get_top_features(st.session_state.form_data, model, n=5)
+            with st.expander(f"{model}: User vs Population for Top Features", expanded=(model == models[0])):
+                tabs = st.tabs(top_features)
+                for tab, feature in zip(tabs, top_features):
                     with tab:
-                        col1, col2 = st.columns([1, 1])
-                        with col1:
-                            violin_with_user_value(feature, st.session_state.form_data)
-                        with col2:
-                            pdp_with_user_value(feature, st.session_state.form_data, st.session_state.model)
-                
-            
-
-        col1, col2, col3, col4 = st.columns([2, 0.5, 2, 0.5])
-
-        with col1:
-            explain_force(st.session_state.form_data, st.session_state.model)
-            explanantion_data = explain_waterfall(st.session_state.form_data, st.session_state.model)
-        
-        with col3:
-            st.write(explain_shap_values(explanantion_data))
-        
-        # st.json({k: v for k, v in st.session_state.form_data.items()})
+                        c1, c2 = st.columns([1, 1])
+                        with c1:
+                            violin_with_user_value(feature, st.session_state.form_data, key=f"{model}_{feature}_violin")
+                        with c2:
+                            pdp_with_user_value(feature, st.session_state.form_data, model, key=f"{model}_{feature}_pdp")
