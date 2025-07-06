@@ -360,7 +360,7 @@ def feature_importance():
     for name, model in models.items():
         if name == "Logistic Regression":
             with col2:
-                st.subheader(name)
+                st.subheader(name, help="Coefficient Plot: This plot shows you the coefficients from the Logistic Regression model. Features with positive bars increase the likelihood of an Alzheimer's prediction, while negative bars reduce it. The longer the bar, the stronger the influence—giving you a clear view of how each input drives the model’s decision.")
                 coefs = model.coef_[0]
                 feature_df = pd.DataFrame({"Feature": X.columns, "Coefficient": coefs})
                 feature_df["Odds Ratio"] = np.exp(feature_df["Coefficient"])
@@ -370,7 +370,7 @@ def feature_importance():
                 st.pyplot(fig)
         elif name == "Random Forest":
             with col2:
-                st.subheader(name)
+                st.subheader(name, help="Feature Importance Plot: In this bar chart, you see how important each feature is to the Random Forest model's decisions. Taller bars indicate features the model relied on more when splitting data in its trees. This visual helps you quickly identify which patient factors contributed most to the prediction.")
                 importances = model.feature_importances_
                 feature_df = pd.DataFrame({"Feature": X.columns, "Importance": importances})
                 feature_df = feature_df.sort_values(by="Importance", ascending=False)
@@ -379,7 +379,7 @@ def feature_importance():
                 st.pyplot(fig)
         else:
             with col3:
-                st.subheader(name)
+                st.subheader(name, help="SHAP Summary Plot: The SHAP summary plot gives you a high-level overview of how each feature affects the model’s predictions. Each point represents a patient; colors show feature values, and position shows whether the feature pushed the prediction higher or lower. This lets you interpret the neural network’s behavior across the entire dataset.")
                 shap_values = np.load(find_file("background.npy"), allow_pickle=True)
                 print(shap_values.shape)
                 fig, ax = plt.subplots()
@@ -389,14 +389,14 @@ def feature_importance():
 def data_transparency():
     col1, col2, col3 = st.columns([1,0.5,1])
     with col1:
-        st.markdown("### Feature Distributions by Diagnosis")
+        st.markdown("### Feature Distributions by Diagnosis", help="This plot shows how a selected feature is distributed for patients with and without Alzheimer’s. By comparing the curves, you can visually assess whether that feature tends to differ between the two groups. It helps you understand which variables may serve as potential indicators of the disease.")
         selected_feature = st.selectbox("Select a feature", X.columns)
         fig, ax = plt.subplots()
         sns.kdeplot(data=df, x=selected_feature, hue="Diagnosis", ax=ax)
         st.pyplot(fig)
 
     with col3:
-        st.markdown("### Correlation Heatmap")
+        st.markdown("### Correlation Heatmap", help="The correlation heatmap reveals how features relate to one another, as well as to the diagnosis label. Strong positive or negative correlations can highlight redundant variables or potential risk markers. This overview helps you interpret patterns in the dataset and detect multicollinearity.")
         fig, ax = plt.subplots(figsize=(10, 8))
         corr_df = df.drop(columns=["Diagnosis", "DoctorInCharge", "PatientID"])
         sns.heatmap(corr_df.corr(), cmap="coolwarm", annot=False, ax=ax)

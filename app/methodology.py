@@ -40,7 +40,14 @@ with st.container(border=True):
     left, middle, right = st.columns([1, 1, 1])
 
 
-st.header("📊 Model Performance")
+st.header("📊 Model Performance", help="""
+ROC Curve: 
+The ROC (Receiver Operating Characteristic) curve helps you evaluate how well the model distinguishes between patients with and without Alzheimer’s. It shows the trade-off between sensitivity (true positive rate) and specificity (1 - false positive rate) across different thresholds. A curve that rises steeply and stays near the top-left corner indicates strong predictive performance.
+
+Confusion Matrix: 
+The confusion matrix gives you a clear breakdown of the model's predictions—how many were correct and where errors occurred. It shows true positives, true negatives, false positives, and false negatives, helping you assess how often the model misses or wrongly flags Alzheimer's cases. This is particularly useful for understanding clinical risks in false diagnoses.
+
+""")
 col1, col2, col3 = st.columns([1, 1, 1])
 fig, df = model_performance()
 
@@ -55,7 +62,7 @@ feature_importance()
 st.header("🔍 Data Transparency")
 data_transparency()
 
-st.header("⚖️ Fairness & Bias Analysis")
+st.header("⚖️ Fairness & Bias Analysis", help="Fairness Across Demographic Groups: This stacked bar chart shows you how the model’s predictions are distributed across different demographic groups. Each bar represents a subgroup, and the sections indicate the proportion of Alzheimer’s vs. non-Alzheimer’s predictions. By comparing these bars, you can assess whether certain groups are receiving disproportionately positive or negative predictions—helping you detect potential bias in the model’s behavior.")
 st.markdown("Evaluating potential bias in model predictions based on demographic subgroups.")
 
 fairness()

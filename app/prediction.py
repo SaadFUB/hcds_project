@@ -61,6 +61,35 @@ numerical_config = {
     'ADL': {'min_value': 0, 'max_value': 10, 'value': 9, 'step': 1}
 }
 
+recommendations = [
+  {
+    "title": "Healthy Lifestyle and Mental Stimulation",
+    "description": "Encourage regular physical activity, a balanced diet (e.g., Mediterranean), social interaction, and brain-stimulating activities like reading or puzzles. These can help slow cognitive decline in the early stages or even as a preventive measure.",
+    "stage": 1
+  },
+  {
+    "title": "Routine Monitoring and Medication Review",
+    "description": "Schedule periodic check-ups to monitor memory and cognitive function. Consider discussing medications like cholinesterase inhibitors (e.g., donepezil) with a specialist to potentially manage early symptoms.",
+    "stage": 2
+  },
+  {
+    "title": "Establishing Safety Measures at Home",
+    "description": "As symptoms progress, make environmental adjustments such as labeling drawers, using reminder notes, installing safety locks, and minimizing trip hazards to promote safe, independent living.",
+    "stage": 3
+  },
+  {
+    "title": "Involving Caregivers and Advanced Planning",
+    "description": "Include family or professional caregivers in the care routine. Discuss legal and financial planning early (e.g., power of attorney, advance directives) while the patient can still participate meaningfully.",
+    "stage": 4
+  },
+  {
+    "title": "Palliative and Full-Time Care Options",
+    "description": "In advanced stages, consider hospice or specialized memory care facilities. Focus shifts to comfort, managing distressing symptoms, and supporting caregivers emotionally and practically.",
+    "stage": 5
+  }
+]
+
+
 def value_to_color(value):
     norm_value = value / 100.0
 
@@ -239,6 +268,7 @@ def get_top_features(form_data, model_name, n=5):
 if st.session_state.show_prediction:
     if st.session_state.update_prediction:
         st.session_state.update_prediction = False
+        st.session_state.avg_score = 0
 
         predictions = {model: predict(st.session_state.form_data, model) for model in models}
 
@@ -273,6 +303,7 @@ if st.session_state.show_prediction:
             with cols[i]:
 
                 prediction_val = int(predictions[model]["probability"][0][1] * 100)
+                st.session_state.avg_score += prediction_val/3
 
                 st.markdown(f"<div style='font-size:1.1rem; font-weight:600; margin-bottom:10px; text-align: center;'>{model}</div>",
                             unsafe_allow_html=True)
@@ -317,3 +348,40 @@ The partial dependence plot helps you understand how changes in one feature affe
                             violin_with_user_value(feature, st.session_state.form_data, key=f"{model}_{feature}_violin")
                         with c2:
                             pdp_with_user_value(feature, st.session_state.form_data, model, key=f"{model}_{feature}_pdp")
+
+            
+    if st.session_state.avg_score > 60:
+        recoms = recommendations[2:5]
+    elif st.session_state.avg_score > 30:
+        recoms = recommendations[1:4]
+    else:
+        recoms = recommendations[0:3]
+
+    st.markdown("### Recommendations")
+    cols = st.columns([1, 1, 1])
+    for i, recom in enumerate(recoms):
+        with cols[i]:
+            with st.container(border=True):
+                st.markdown("<div style='text-align: center; font-weight: bold;'>"+recom["title"]+"</div>", unsafe_allow_html=True)
+                st.write(recom["description"])
+                st.markdown(
+                        """
+                        <div style='text-align: center;'>
+                            <a href="/resources" style='text-decoration: none;'>
+                                <button style='
+                                    padding: 0.5em 1.2em;
+                                    font-size: 1rem;
+                                    background-color: transparent;
+                                    color: #615842;
+                                    border: 2px solid #615842;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                    margin-bottom: 10px;
+                                '>
+                                    More Resources
+                                </button>
+                            </a>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
