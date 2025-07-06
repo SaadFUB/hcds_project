@@ -1,12 +1,7 @@
 import streamlit as st
 from production.inference import REQUIRED_FEATURES
-from production.inference import predict
-from production.inference import load_random_row
-from production.inference import explain_waterfall
-from production.inference import explain_force
-from production.inference import violin_with_user_value
-from production.inference import pdp_with_user_value
-from production.inference import explain_shap_values
+from production.inference import predict, load_random_row, explain_waterfall, explain_force, violin_with_user_value, pdp_with_user_value, explain_shap_values
+import matplotlib.colors as mcolors
 
 
 #st.set_page_config(page_title="Alzheimer's Risk Assessment", layout="wide")
@@ -65,6 +60,18 @@ numerical_config = {
     'FunctionalAssessment': {'min_value': 0, 'max_value': 10, 'value': 8, 'step': 1},
     'ADL': {'min_value': 0, 'max_value': 10, 'value': 9, 'step': 1}
 }
+
+def value_to_color(value):
+    norm_value = value / 100.0
+
+    cmap = mcolors.LinearSegmentedColormap.from_list(
+        "custom_gradient", ["green", "yellow", "red"]
+    )
+    
+    rgba = cmap(norm_value)
+    
+    return mcolors.to_hex(rgba)
+
 
 if 'form_data' not in st.session_state:
     st.session_state.form_data = {}
@@ -235,18 +242,46 @@ if st.session_state.show_prediction:
 
         predictions = {model: predict(st.session_state.form_data, model) for model in models}
 
-        st.markdown('<h2 style="text-align: center;">Risk of Alzheimer\'s: Model Comparison</h2>', unsafe_allow_html=True)
+        col1, col2, col3 = st.columns([1, 1, 1])
+        with col2:
+            st.markdown('<h2 style="text-align: center;">Risk of Alzheimer\'s: Model Comparison</h2>', unsafe_allow_html=True, help="We use three models—Logistic Regression, Random Forest, and Neural Network—to balance accuracy and interpretability. Logistic Regression offers transparency, Random Forest adds robustness and handles complex patterns, while Neural Networks capture subtle nonlinearities with high performance. This combination ensures both clinical trust and predictive strength.")
+            st.markdown(
+                        """
+                        <div style='text-align: center;'>
+                            <a href="/methodology" style='text-decoration: none;'>
+                                <button style='
+                                    padding: 0.5em 1.2em;
+                                    font-size: 1rem;
+                                    background-color: transparent;
+                                    color: #615842;
+                                    border: 2px solid #615842;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                '>
+                                    More Info
+                                </button>
+                            </a>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+             
+
+
         cols = st.columns(len(models))
         for i, model in enumerate(models):
             with cols[i]:
-                st.markdown(f"<div style='font-size:1.1rem; font-weight:600; margin-bottom:10px'>{model}</div>",
+
+                prediction_val = int(predictions[model]["probability"][0][1] * 100)
+
+                st.markdown(f"<div style='font-size:1.1rem; font-weight:600; margin-bottom:10px; text-align: center;'>{model}</div>",
                             unsafe_allow_html=True)
                 st.markdown(
                     f"""<div style="width: 80px; height: 80px; 
-                            border-radius: 50%; background-color: #858481; 
+                            border-radius: 50%; background-color: {value_to_color(prediction_val)}; 
                             display: flex; align-items: center; 
                             justify-content: center; color: white; 
-                            margin: 10px auto;">{int(predictions[model]["probability"][0][1] * 100)}%</div>""",
+                            margin: 10px auto;">{prediction_val}%</div>""",
                     unsafe_allow_html=True
                 )
 
@@ -254,17 +289,26 @@ if st.session_state.show_prediction:
         for i, model in enumerate(models):
             with exp_tabs[i]:
                 explain_force(st.session_state.form_data, model)
-                data, fig = explain_waterfall(st.session_state.form_data, model, return_fig=True)
-                st.pyplot(fig)
-                st.write(explain_shap_values(data))
+                col1, col2, col3 = st.columns([1, 2, 1])
+                with col2:
+                    data, fig = explain_waterfall(st.session_state.form_data, model, return_fig=True)
+                    st.pyplot(fig)
+                    st.write(explain_shap_values(data))
 
         st.markdown("---")
-        st.markdown(f"### Top Influential Features: User vs Population")
+        st.markdown(f"### Top Influential Features: Patient vs Population", help="""
+Violin Plot:
+The violin plot shows you how a specific feature is distributed across patients with and without Alzheimer’s. Your patient’s value is marked on the plot, helping you see where they fall relative to typical cases. This gives you quick visual insight into whether the input aligns more with low- or high-risk groups.
+
+Partial Dependence Plot:
+The partial dependence plot helps you understand how changes in one feature affect the model’s prediction, while all other factors are held constant. It shows you the model’s learned relationship between that feature and Alzheimer’s risk. This helps you assess how influential that feature is in your patient’s case.                    
+
+""")
 
 
         for model in models:
             top_features = get_top_features(st.session_state.form_data, model, n=5)
-            with st.expander(f"{model}: User vs Population for Top Features", expanded=(model == models[0])):
+            with st.expander(f"{model}: Patient vs Population for Top Features", expanded=(model == models[0])):
                 tabs = st.tabs(top_features)
                 for tab, feature in zip(tabs, top_features):
                     with tab:

@@ -291,7 +291,7 @@ def explain_shap_values(shap_dict):
 
             {top_shap_description}
 
-            Keep your explanation concise, aiming for 2 to 3 short paragraphs. Your response should *only* contain this explanation and nothing else."""
+            Keep your explanation concise, aiming for 2 to 3 short paragraphs and bold the feature names in the paragraphs. Your response should *only* contain this explanation and nothing else."""
 
     
     client = genai.Client(
