@@ -304,103 +304,90 @@ None to minimal. The physician does not need to understand how the machine learn
 
 *That is all on our side! Thank you so much for your feedback. Is there anything else you would like to share?*
 
-## Interview 1 (22:43)  
-*Consent given*
+# User Study Feedback
 
-**Have you ever used any apps or tools to track your well-being?**  
-- Smart watch app to check well-being.
+## 1. Summary
 
-**If yes, what were your expectations when using such tools?**  
-- Information reflecting on how to improve health and general self-reflection.
+### General Use of Well-being Tools
+- Uses smartwatch apps for health tracking and self-reflection.
+- Tracks health and menstrual cycle.
 
-**Who do you think would use an app like this?**  
-- Recommendations about how to avoid problems.
+### Specific Use of Well-being Tools
+- Those looking to avoid health issues and improve well-being.
+- People looking for interpretable and functional tools.
 
-### Homepage  
-**Q: What do you think you can do here?**  
-- I know why I would use it and I feel very satisfied with my knowledge of what to do.
+### Homepage
 
-**Task 1: You now want to make a prediction - how would you proceed?**  
-- I would input some information and feels very clear.
+- Clearly understands purpose and usage of the homepage.
+- Feels satisfied and confident navigating it.
+- Name, color, readability, and warning banner all appreciated.
 
-### Making a Prediction  
-**Q: What do you think you can do here?**  
-- Make assessments and receive feedback.  
-- Need to think a little bit.
+### Making a Prediction
 
-**Q: Are any of the input fields unclear?**  
-- MMSE score — doesn’t know what it is (real physician would know).  
-- Function assessment — doesn’t know what it is either.  
-- Sliders aren’t placed in a visually pleasing way; could be more beautiful.
+- Knows it involves inputting patient data. 
+- Finds some terms unclear:
+  - MMSE score and Function assessment not understood. BMI understanable only to professionals, diet quality and sleep quality need clarifications (confused with hours).
+  - Sliders placement is visually unappealing and should be improved.
+- Overall, impressed with the input area.
+- Unsure about which model to select.
 
-**Task 2: Please fill in the patient’s data and make a prediction.**  
-- I don’t know what model to choose because I’m just a physician.  
-- Gave her feedback that models have tradeoff between explanation and accuracy, so she should read methodology first and then pick a model.  
-- She’d like to run all models at once and be able to compare them at the end. She looked distraught here.  
-- Picking a model is NOT a symptom. It shouldn’t be in symptoms field in her opinion. But she is not a physician.
+### Understanding the Prediction
 
-### Understanding the Prediction  
-**Task 3: Now try to understand the prediction shown without clicking further. What do you understand from it?**  
-- Need for information written on the page to understand the context.  
-- We explained context and then she doubled down on wanting that in writing.
+- Needs contextual explanation on the page (written and not verbally).
+- Graphs are hard to interpret:
+  - Wants descriptions for each.
+  - More emphasis on influential features.
+  - Prefers bolded text and simpler language (current is too “poetic”).
+  - Suggests visual cues (e.g., bigger circles/different colors = higher/lower Alzheimer’s likelihood).
+- Unable to make actionable decisions, prediction should include recommendations too.
+- Unclear what the "94%" score means (risk? confidence?).
 
-**Task 4: Can you interpret the graphs to understand why this prediction was made? Is the text explanation helpful?**  
-- Descriptions of graphs would be appreciated because she doesn’t know how to interpret the graph.  
-- Wants more text about the 7 most influential factors, user/patient values, etc.  
-- She has too many questions and doesn’t like having that many questions.  
-- She likes SHAP values, but wants stuff in bold. Too much text. She is exhausted.  
-- Called text too poetic, wants more down to earth language that is understandable.  
-- She wants bigger circles when Alzheimer’s is more likely and smaller ones when less likely.
+### Understanding the Model
 
-**Task 5: Does this result lead you to take any specific action (e.g., referral, patient education)? If so, what?**  
-- She isn’t able to make decision because she is confused about data interpretation.
+- Expects a prompt or suggestion to visit the Methodology section.
+- Found that section hard to locate naturally.
+- Once reached, thinks the page is "fantastic."
+- Wants the methodology page linked directly to the score.
 
-### Understanding the Model  
-**Task 7: Now you want to understand how the model works. Where do you expect to find this information?**  
-- Somewhere else it should say to go to methodology section (either in input area or output area).  
-- Methodology section is not self-revealing; she wouldn’t go there naturally without being told to.
+### Overall Experience
+- Likes explanation features.
+- Strong focus on visuals in prediction result.
+- Wants visual clarity to be prioritized further and reorder certains visuals.
 
-**Q: What do you think about this page?**  
-- The page itself is awesome. Fantastic.
+## 2. Design Implications
 
-**Is there anything missing that you would expect to see in this kind of app?**  
-- Nothing. She said she wanted recommendations after saying nothing when pressured to say something.  
-- We explained that recommendations was in initial design and she got why we scrapped it but also could see why it is useful.
+### Navigation and User Experience
 
----
+- Clearly guide users to supporting content pages.
+- Add prompts or inline links near model selection and prediction results.
+- Place contextual tooltips or info icons beside complex terms.
+- Avoid relying on graphs only for explanation; written context is essential.
 
-## Interview 2 (14:21)  
-*Consent given*
+### Input Design & Terminology
 
-**Have you ever used any apps or tools to track your well-being?**  
-- Tracking health and menstrual cycle.
+- Avoid jargon or provide clear explanations for medical/technical terms (e.g., MMSE, function assessment). Use full name and provide proper scales.
+- Follow proper design practices for input fields (e.g., sliders, drop-down menus).
 
-**Who do you think would use an app like this?**  
-- Interpretable and functional.
+### Model Selection & Prediction Result
 
-### Homepage  
-**Q: What do you think you can do here?**  
-- Nice name.  
-- Nice colors.  
-- Easy to read.  
-- Warning is perfect to grab attention.
+- Minimize user burden when choosing models, display all models in a single page.
+- Highlight and bold key takeaways.
+- Make influential features and SHAP visualizations intuitive.
+- Reorder some of the visuals so that less detailed and concise information is prioritized.
+- Make visual markers of different colors for higher risk importance.
+- Support visuals with simple, non-poetic explanations.
+- Provide clear recommendations or next steps after the prediction.
 
-### Making a Prediction  
-**Q: Are any of the input fields unclear?**  
-- BMI but if she is physician she’d know.  
-- Diet quality 1-10 is unclear.  
-- Sleep quality she thought it was hours (why not include 0).  
-- Overall she is very impressed by our information.  
-- She’s also not sure which model to select.
+## 3. Changes to Implement
 
-### Understanding the Prediction  
-**Task 3: Now try to understand the prediction shown without clicking further. What do you understand from it?**  
-- She didn’t get the 94% meaning (is it risk?).
+### Navigation and User Experience
 
-### Understanding the Model  
-**Task 7: Now you want to understand how the model works. Where do you expect to find this information?**  
-- She’d like to see the methodology page linked to the 94% score.
+We will improve navigation by clearly guiding users to supporting content such as the methodology page. We'll add prompts and inline links near key elements like model selection and prediction results. To help with complex terms, we’ll include contextual tooltips or info icons. We also recognize that relying solely on graphs isn’t enough—so we’ll make sure written context is always provided alongside visual explanations.
 
-**What did you like (or dislike) most about the app?**  
-- Likes explanations and is most focused on the visuals of the prediction result. She would like as much focus on that as possible as that is the key aspect of the website.
+### Input Design & Terminology
 
+We’ll revise input fields to avoid medical jargon and instead use full names with clear explanations and proper scales (e.g., MMSE, function assessment). We'll also follow proper design practices to improve the visual layout and usability of elements like sliders and drop-down menus.
+
+### Model Selection & Prediction Result
+
+To reduce user burden when selecting models, we’ll display all models on a single page and allow users to compare them directly. We’ll highlight and bold key takeaways to make insights easier to digest. We'll improve SHAP and influential feature visualizations so they’re more intuitive and less cognitively demanding. This includes reordering visuals to show concise and high-level information first, using color-coded visual markers to indicate risk levels, and replacing overly poetic language with clear, straightforward explanations. Lastly, we’ll include actionable recommendations or next steps after a prediction to support decision-making.
