@@ -3,12 +3,14 @@ import pandas as pd
 import numpy as np
 from fileloader import find_file
 
+# --- PAGE TITLE & INTRO ---
 st.markdown("<h2 style='text-align: center; margin-bottom: 0.9em'>Helpful resources</h2>", unsafe_allow_html=True)
 st.markdown(
     "<div style='text-align: center; font-size: 1.1em; color: #3d3a2a; margin-bottom: 2em;'>Helpful information and tools to guide you, your patients, and their relatives after an Alzheimer's risk assessment.</div>",
     unsafe_allow_html=True
 )
 
+# --- DISCLAIMER ---
 st.markdown(
     """
     <div style='background-color:#fff8e1; border:1px solid #ffe082; border-radius:8px; padding:1em; margin-bottom:1.5em; color:#6d4c1b; font-size:1em;'>
@@ -18,7 +20,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- SEARCH & FILTER ROW ---
+# --- SEARCH BAR ---
 search_col = st.container()
 
 with search_col:
@@ -27,6 +29,7 @@ with search_col:
 # --- FILTER & SORT ROW ---
 filter_col, sort_col = st.columns([3, 1])
 
+# --- FILTER ---
 with filter_col:
     st.markdown(
         "<span style='font-size:0.85em; color:#3d3a2a; margin-bottom:-2em; display:block;'>Filter resources by</span>",
@@ -35,7 +38,7 @@ with filter_col:
 
     audience_options = ["Patients", "Doctors", "Relatives"]
     severity_options = ["Low (0-20%)", "Medium (21-50%)", "High (51-100%)"]
-    type_options = ["Website", "PDF", "Video", "Photo"]
+    type_options = ["Website", "PDF", "Video", "Image"]
 
     if "selected_audiences" not in st.session_state:
         st.session_state.selected_audiences = audience_options.copy()
@@ -44,6 +47,7 @@ with filter_col:
     if "selected_types" not in st.session_state:
         st.session_state.selected_types = type_options.copy()
 
+    # --- FILTER EXPANDER ---
     with st.expander("Show filters", expanded=False):
         col1, col2 = st.columns(2)
         with col1:
@@ -80,7 +84,7 @@ with filter_col:
         st.session_state.selected_severities = updated_severities
         st.session_state.selected_types = updated_types
 
-    # currently selected filters bar
+    # --- CURRENTLY SELECTED FILTERS BAR ---
     audience_str = ", ".join(st.session_state.selected_audiences) if st.session_state.selected_audiences else "None"
     severity_str = ", ".join(st.session_state.selected_severities) if st.session_state.selected_severities else "None"
     type_str = ", ".join(st.session_state.selected_types) if st.session_state.selected_types else "None"
@@ -94,6 +98,8 @@ with filter_col:
     selected_audiences = st.session_state.selected_audiences
     selected_severities = st.session_state.selected_severities
     selected_types = st.session_state.selected_types
+
+# --- SORT ---
 with sort_col:
     sort_options = {
         "Title (A-Z)": ("title", False),
@@ -120,7 +126,7 @@ resources = [
         "desc": "Find local and online support groups for memory care.",
         "audience": ["Patients", "Relatives"],
         "risk_severity": "Low",
-        "type": "Website",
+        "type": "PDF",
         "link": "https://www.example.com/memory-support",
         "image": "memory_support_groups.png"
     },
@@ -156,7 +162,7 @@ resources = [
         "desc": "How to talk to patients and families about risk.",
         "audience": "Doctors",
         "risk_severity": "Medium",
-        "type": "PDF",
+        "type": "Website",
         "link": "https://www.example.com/communication-strategies.pdf",
         "image": "communication_strategies.png"
     },
@@ -165,7 +171,7 @@ resources = [
         "desc": "Support for relatives coping with a diagnosis.",
         "audience": "Relatives",
         "risk_severity": "Low",
-        "type": "Photo",
+        "type": "Image",
         "link": "https://www.example.com/family-counseling.jpg",
         "image": "family_counseling.png"
     },
@@ -192,7 +198,7 @@ resources = [
         "desc": "Schedule periodic check-ups to monitor memory and cognitive function. Consider discussing medications like cholinesterase inhibitors (e.g., donepezil) with a specialist to potentially manage early symptoms...",
         "audience": ["Patients", "Relatives"],
         "risk_severity": "Medium",
-        "type": "Website",
+        "type": "Video",
         "link": "https://www.example.com/routine-monitoring-and-medication-review",
         "image": "monitoring_and_medication.png"
     },
@@ -200,7 +206,6 @@ resources = [
 
 # --- FILTERING ---
 def severity_label_to_value(label):
-    # extracts "Low", "Medium", or "High" from the label
     return label.split()[0]
 
 selected_severity_values = [severity_label_to_value(s) for s in selected_severities]
@@ -236,20 +241,24 @@ else:
 st.markdown("---")
 for idx, res in enumerate(sorted_resources):
     if idx > 0:
+        # --- SEPARATION LINE BETWEEN RESOURCES ---
         st.markdown("<hr style='border: 1px solid #ecebe4; margin: 2em 0;'>", unsafe_allow_html=True)
     with st.container():
         img_col, text_col, btn_col = st.columns([1, 4, 2])
         with img_col:
+            # --- IMAGE DISPLAY ---
             image_path = res.get("image")
             if image_path and image_path.strip():
                 st.image(str(find_file(image_path)), width=60)
             else:
                 st.image(str(find_file("placeholder.svg")), width=60)
         with text_col:
+            # --- TITLE ---
             if res.get("link"):
                 title_html = f"<a href='{res['link']}' target='_blank' style='text-decoration:underline; color:inherit;'><b>{res['title']}</b></a>"
             else:
                 title_html = f"<b>{res['title']}</b>"
+            # --- AUDIENCE AND SEVERITY ---
             if isinstance(res['audience'], list):
                 audience_display = ", ".join(res['audience'])
             else:
@@ -260,10 +269,12 @@ for idx, res in enumerate(sorted_resources):
                 f"Audience: {audience_display} | Severity: {res['risk_severity']}",
                 unsafe_allow_html=True
             )
+            # --- DESCRIPTION ---
             st.markdown(
                 f"<span style='color: #888; margin-top: -0.7em; display: block;'>{res['desc']}</span>",
                 unsafe_allow_html=True
             )
+        # --- OPEN BUTTON ---
         with btn_col:
             btn_key = f"open_{idx}"
             if res.get("link"):
