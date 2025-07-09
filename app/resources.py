@@ -125,7 +125,7 @@ resources = [
         "title": "Memory Support Groups",
         "desc": "Find local and online support groups for memory care.",
         "audience": ["Patients", "Relatives"],
-        "risk_severity": "Low",
+        "risk_severity": ["Low", "Medium"],
         "type": "PDF",
         "link": "https://www.example.com/memory-support",
         "image": "memory_support_groups.png"
@@ -134,7 +134,7 @@ resources = [
         "title": "Caregiver Tips",
         "desc": "Advice for caregivers supporting loved ones with Alzheimer's.",
         "audience": "Relatives",
-        "risk_severity": "Medium",
+        "risk_severity": ["Medium", "High"],
         "type": "PDF",
         "link": "https://www.example.com/caregiver-tips.pdf",
         "image": "caregiver_tips.png"
@@ -143,7 +143,7 @@ resources = [
         "title": "Legal Planning",
         "desc": "Guidance on legal and financial planning after diagnosis.",
         "audience": ["Patients", "Relatives"],
-        "risk_severity": "High",
+        "risk_severity": ["Low", "Medium", "High"],
         "type": "PDF",
         "link": "https://www.example.com/legal-planning.pdf",
         "image": "legal_planning.png"
@@ -152,7 +152,7 @@ resources = [
         "title": "Clinical Guidelines",
         "desc": "Latest clinical guidelines for Alzheimer's risk management.",
         "audience": "Doctors",
-        "risk_severity": "High",
+        "risk_severity": ["Low", "Medium", "High"],
         "type": "Website",
         "link": "https://www.example.com/clinical-guidelines",
         "image": "clinical_guidelines.png"
@@ -161,7 +161,7 @@ resources = [
         "title": "Communication Strategies",
         "desc": "How to talk to patients and families about risk.",
         "audience": "Doctors",
-        "risk_severity": "Medium",
+        "risk_severity": ["Low", "Medium", "High"],
         "type": "Website",
         "link": "https://www.example.com/communication-strategies.pdf",
         "image": "communication_strategies.png"
@@ -170,7 +170,7 @@ resources = [
         "title": "Family Counseling",
         "desc": "Support for relatives coping with a diagnosis.",
         "audience": "Relatives",
-        "risk_severity": "Low",
+        "risk_severity": ["Low", "Medium", "High"],
         "type": "Image",
         "link": "https://www.example.com/family-counseling.jpg",
         "image": "family_counseling.png"
@@ -179,7 +179,7 @@ resources = [
         "title": "Establishing Safety Measures at Home",
         "desc": "As symptoms progress, make environmental adjustments such as labeling drawers, using reminder notes, installing safety locks, and minimizing trip hazards to promote safe, independent living...",
         "audience": ["Patients", "Relatives"],
-        "risk_severity": "Medium",
+        "risk_severity": ["Medium", "High"],
         "type": "Video",
         "link": "https://www.example.com/safety-measures.mp4",
         "image": "safety_measures.png"
@@ -217,7 +217,10 @@ filtered_resources = [
         isinstance(res["audience"], list) and any(aud in selected_audiences for aud in res["audience"])
         or isinstance(res["audience"], str) and res["audience"] in selected_audiences
     ))
-    and (not selected_severity_values or res["risk_severity"] in selected_severity_values)
+    and (not selected_severity_values or (
+        isinstance(res["risk_severity"], list) and any(sev in selected_severity_values for sev in res["risk_severity"])
+        or isinstance(res["risk_severity"], str) and res["risk_severity"] in selected_severity_values
+    ))
     and (not selected_types or res["type"] in selected_types)
 ]
 
@@ -263,10 +266,14 @@ for idx, res in enumerate(sorted_resources):
                 audience_display = ", ".join(res['audience'])
             else:
                 audience_display = res['audience']
+            if isinstance(res['risk_severity'], list):
+                severity_display = ", ".join(res['risk_severity'])
+            else:
+                severity_display = res['risk_severity']
             st.markdown(
                 f"{title_html} "
                 f"<span style='background-color:#ecebe4; color:#3d3a2a; border-radius:6px; padding:2px 10px; font-size:0.9em; margin-left:8px;'>{res['type']}</span><br>"
-                f"Audience: {audience_display} | Severity: {res['risk_severity']}",
+                f"Audience: {audience_display} | Severity: {severity_display}",
                 unsafe_allow_html=True
             )
             # --- DESCRIPTION ---
