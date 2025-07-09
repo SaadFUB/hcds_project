@@ -121,7 +121,8 @@ resources = [
         "audience": ["Patients", "Relatives"],
         "risk_severity": "Low",
         "type": "Website",
-        "link": "https://www.example.com/memory-support"
+        "link": "https://www.example.com/memory-support",
+        "image": "memory_support_groups.png"
     },
     {
         "title": "Caregiver Tips",
@@ -129,7 +130,8 @@ resources = [
         "audience": "Relatives",
         "risk_severity": "Medium",
         "type": "PDF",
-        "link": "https://www.example.com/caregiver-tips.pdf"
+        "link": "https://www.example.com/caregiver-tips.pdf",
+        "image": "caregiver_tips.png"
     },
     {
         "title": "Legal Planning",
@@ -137,7 +139,8 @@ resources = [
         "audience": ["Patients", "Relatives"],
         "risk_severity": "High",
         "type": "PDF",
-        "link": "https://www.example.com/legal-planning.pdf"
+        "link": "https://www.example.com/legal-planning.pdf",
+        "image": "legal_planning.png"
     },
     {
         "title": "Clinical Guidelines",
@@ -145,7 +148,8 @@ resources = [
         "audience": "Doctors",
         "risk_severity": "High",
         "type": "Website",
-        "link": "https://www.example.com/clinical-guidelines"
+        "link": "https://www.example.com/clinical-guidelines",
+        "image": "clinical_guidelines.png"
     },
     {
         "title": "Communication Strategies",
@@ -153,7 +157,8 @@ resources = [
         "audience": "Doctors",
         "risk_severity": "Medium",
         "type": "PDF",
-        "link": "https://www.example.com/communication-strategies.pdf"
+        "link": "https://www.example.com/communication-strategies.pdf",
+        "image": "communication_strategies.png"
     },
     {
         "title": "Family Counseling",
@@ -161,7 +166,8 @@ resources = [
         "audience": "Relatives",
         "risk_severity": "Low",
         "type": "Photo",
-        "link": "https://www.example.com/family-counseling.jpg"
+        "link": "https://www.example.com/family-counseling.jpg",
+        "image": "family_counseling.png"
     },
     {
         "title": "Establishing Safety Measures at Home",
@@ -169,7 +175,8 @@ resources = [
         "audience": ["Patients", "Relatives"],
         "risk_severity": "Medium",
         "type": "Video",
-        "link": "https://www.example.com/safety-measures.mp4"
+        "link": "https://www.example.com/safety-measures.mp4",
+        "image": "safety_measures.png"
     },
     {
         "title": "Healthy Lifestyle and Mental Stimulation",
@@ -177,7 +184,8 @@ resources = [
         "audience": ["Patients", "Relatives"],
         "risk_severity": "Low",
         "type": "Video",
-        "link": "https://www.example.com/healthy-lifestyle-and-mental-stimulation.mp4"
+        "link": "https://www.example.com/healthy-lifestyle-and-mental-stimulation.mp4",
+        "image": "healthy_lifestyle.png"
     },
     {
         "title": "Routine Monitoring and Medication Review",
@@ -185,7 +193,8 @@ resources = [
         "audience": ["Patients", "Relatives"],
         "risk_severity": "Medium",
         "type": "Website",
-        "link": "https://www.example.com/routine-monitoring-and-medication-review"
+        "link": "https://www.example.com/routine-monitoring-and-medication-review",
+        "image": "monitoring_and_medication.png"
     },
 ]
 
@@ -231,7 +240,11 @@ for idx, res in enumerate(sorted_resources):
     with st.container():
         img_col, text_col, btn_col = st.columns([1, 4, 2])
         with img_col:
-            st.image(str(find_file("placeholder.svg")), width=60)
+            image_path = res.get("image")
+            if image_path and image_path.strip():
+                st.image(str(find_file(image_path)), width=60)
+            else:
+                st.image(str(find_file("placeholder.svg")), width=60)
         with text_col:
             if res.get("link"):
                 title_html = f"<a href='{res['link']}' target='_blank' style='text-decoration:underline; color:inherit;'><b>{res['title']}</b></a>"
